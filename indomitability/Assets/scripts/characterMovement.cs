@@ -7,16 +7,20 @@ using UnityEngine.SceneManagement;
 public class characterMovement : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10f;
-    [SerializeField] float jumpHeight = 10f;
+    [SerializeField] float maxSpeed = 10f;
+    [SerializeField] float jumpHeight = 100f;
     [SerializeField] float slide = 1f;
-    [SerializeField] float extraGrav = 5f;
+    [SerializeField] float fallSpeed = 1f;
+    [SerializeField] float jumpForce = 5f;
+    [SerializeField] float extraJumps = 1f;
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
     BoxCollider2D myBodyCollider;
     Animator myAnimator;
-    bool doubleJumpPossible;
+    bool doubleJumped;
     float gravityScaleAtStart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,7 @@ public class characterMovement : MonoBehaviour
         {
             myAnimator.SetBool("jumping", false);
             myAnimator.SetBool("falling", true);
+            myRigidbody.velocity -= new Vector2 (0f, fallSpeed);
             maxHeight = myRigidbody.velocity.y;
         } else if (maxHeight == 0 && myRigidbody.velocity.y == maxHeight)
         {
@@ -47,7 +52,7 @@ public class characterMovement : MonoBehaviour
         }
         
 
-        if(runSpeed < 10f)
+        if(runSpeed < maxSpeed)
         {
             runSpeed += 0.0001f;
         }
@@ -70,13 +75,20 @@ public class characterMovement : MonoBehaviour
         {
             myAnimator.SetBool("jumping", true);
             myRigidbody.velocity = new Vector2 (0f, jumpHeight);  
-            doubleJumpPossible = true;
+            extraJumps += 1;
         }
-        else if(value.isPressed && doubleJumpPossible)
+        else if(value.isPressed && extraJumps > 0)
         {
             myAnimator.SetTrigger("doubleJump");
             myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpHeight);   
-            doubleJumpPossible = false;
+            extraJumps -= 1;
+        }
+        
+    }
+    void OnCollisionEnter2D(Collision2D other) {
+        if (extraJumps > 0)
+        {
+            extraJumps -= 1;
         }
         
     }
@@ -87,6 +99,11 @@ public class characterMovement : MonoBehaviour
         {
             myAnimator.SetTrigger("sliding");
             myRigidbody.velocity = new Vector2 (slide, 0f);  
+
         }
+        // else if (!myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
+        // {
+        //     myAnimator.SetBool("sliding", false);
+        // }
     }
 }
