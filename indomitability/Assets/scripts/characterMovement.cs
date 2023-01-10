@@ -10,6 +10,7 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float maxSpeed = 10f;
     [SerializeField] float jumpHeight = 100f;
     [SerializeField] float slide = 1f;
+    [SerializeField] float airSlam = 3f;
     [SerializeField] float fallSpeed = 1f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float extraJumps = 1f;
@@ -20,10 +21,12 @@ public class characterMovement : MonoBehaviour
     Animator myAnimator;
     bool doubleJumped;
     float gravityScaleAtStart;
+    bool isAlive = true;
 
     // Start is called before the first frame update
     void Start()
     {
+
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         myBodyCollider = GetComponent<BoxCollider2D>();
@@ -33,6 +36,7 @@ public class characterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isAlive) { return; }
         float maxHeight = 0;
         
         if (myRigidbody.velocity.y > 0)
@@ -71,6 +75,7 @@ public class characterMovement : MonoBehaviour
 
     void OnJump(InputValue value)
     {
+        if (!isAlive) { return; }
         if(value.isPressed && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
             myAnimator.SetBool("jumping", true);
@@ -93,6 +98,14 @@ public class characterMovement : MonoBehaviour
         
     }
 
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "causeDamage")
+            {
+               myAnimator.SetTrigger("tookDamage");
+               Die();
+            }
+    }
+
     void OnSlide(InputValue value)
     {
         if(value.isPressed && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
@@ -105,5 +118,21 @@ public class characterMovement : MonoBehaviour
         // {
         //     myAnimator.SetBool("sliding", false);
         // }
+    }
+
+    void OnAirSlam(InputValue value)
+    {
+        if(value.isPressed && !myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
+        {
+            myAnimator.SetTrigger("airSlam");
+            myRigidbody.gravityScale = 0f;
+            myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
+        }
+        myRigidbody.gravityScale = 6f;
+    }
+
+    void Die()
+    {
+            isAlive = false;
     }
 }
