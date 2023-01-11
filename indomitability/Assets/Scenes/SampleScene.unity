@@ -335,7 +335,7 @@ MonoBehaviour:
   maxSpeed: 10
   jumpHeight: 25
   slide: 5
-  airSlam: 9
+  airSlam: 15
   fallSpeed: 0.1
   jumpForce: 5
   extraJumps: 0
@@ -824,11 +824,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003954338}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.33, y: -2.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7573277, w: 0.6530351}
+  m_LocalPosition: {x: -0.33, y: 0.63, z: 0}
+  m_LocalScale: {x: 1.6452, y: 1.6452, z: 1.6452}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -98.458}

@@ -22,6 +22,8 @@ public class characterMovement : MonoBehaviour
     bool doubleJumped;
     float gravityScaleAtStart;
     bool isAlive = true;
+    AnimatorStateInfo stateInfo;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,7 @@ public class characterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
         if (!isAlive) { return; }
         float maxHeight = 0;
         
@@ -90,6 +93,7 @@ public class characterMovement : MonoBehaviour
         }
         
     }
+
     void OnCollisionEnter2D(Collision2D other) {
         if (extraJumps > 0)
         {
@@ -101,8 +105,17 @@ public class characterMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "causeDamage")
             {
-               myAnimator.SetTrigger("tookDamage");
-               Die();
+                if (stateInfo.IsName("airSlam")) 
+                {
+                    myAnimator.SetBool("jumping", true);
+                    myRigidbody.velocity = new Vector2 (0f, jumpHeight);  
+                    extraJumps += 1;
+                    Destroy(other.gameObject);
+                }else
+                {
+                    myAnimator.SetTrigger("tookDamage");
+                    Die();
+                }
             }
     }
 
@@ -125,10 +138,8 @@ public class characterMovement : MonoBehaviour
         if(value.isPressed && !myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
             myAnimator.SetTrigger("airSlam");
-            myRigidbody.gravityScale = 0f;
             myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
         }
-        myRigidbody.gravityScale = 6f;
     }
 
     void Die()
