@@ -17,7 +17,7 @@ public class characterMovement : MonoBehaviour
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
-    BoxCollider2D myBodyCollider;
+    CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
     bool doubleJumped;
     float gravityScaleAtStart;
@@ -31,7 +31,7 @@ public class characterMovement : MonoBehaviour
 
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
-        myBodyCollider = GetComponent<BoxCollider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
     }
 
@@ -137,13 +137,22 @@ public class characterMovement : MonoBehaviour
     {
         if(value.isPressed && !myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
+            myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             myAnimator.SetTrigger("airSlam");
-            myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
+            StartCoroutine(WaitAndRunFunction());
         }
+    }
+
+    private IEnumerator WaitAndRunFunction()
+    {
+        yield return new WaitForSeconds(0.2f);
+        myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+        myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+        myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
     }
 
     void Die()
     {
-            isAlive = false;
+        isAlive = false;
     }
 }
