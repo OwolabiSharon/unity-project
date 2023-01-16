@@ -108,7 +108,7 @@ public class characterMovement : MonoBehaviour
                 if (stateInfo.IsName("airSlam")) 
                 {
                     myAnimator.SetBool("jumping", true);
-                    myRigidbody.velocity = new Vector2 (0f, jumpHeight);  
+                    myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight);  
                     extraJumps += 1;
                     Destroy(other.gameObject);
                 }else
@@ -135,16 +135,20 @@ public class characterMovement : MonoBehaviour
 
     void OnAirSlam(InputValue value)
     {
+        myAnimator.SetTrigger("airSlam");
         if(value.isPressed && !myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
-            myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+            myAnimator.SetBool("jumping", false);
             myAnimator.SetTrigger("airSlam");
+            myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
             StartCoroutine(WaitAndRunFunction());
         }
+        myAnimator.SetTrigger("airSlam");
     }
 
     private IEnumerator WaitAndRunFunction()
     {
+        
         yield return new WaitForSeconds(0.2f);
         myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
         myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
