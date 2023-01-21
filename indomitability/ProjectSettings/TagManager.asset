@@ -44,15 +44,27 @@ TagManager:
   - name: Sky
     uniqueID: 3540925679
     locked: 0
+  - name: Far BG 2
+    uniqueID: 3318527427
+    locked: 0
+  - name: Far BG 1
+    uniqueID: 1715505357
+    locked: 0
+  - name: Background 2
+    uniqueID: 287743431
+    locked: 0
+  - name: Background 1
+    uniqueID: 880466695
+    locked: 0
+  - name: Midground 2
+    uniqueID: 1952623949
+    locked: 0
+  - name: Midground 1
+    uniqueID: 1573140899
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Ground
     uniqueID: 3332666275
-    locked: 0
-  - name: Midground 1
-    uniqueID: 1573140899
-    locked: 0
-  - name: Midground 2
-    uniqueID: 1952623949
     locked: 0
