@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class characterMovement : MonoBehaviour
 {
@@ -14,15 +16,22 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float fallSpeed = 1f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float extraJumps = 1f;
+    [SerializeField] float airSlamPoints = 2f;
+    [SerializeField] float triggerPoints = 1f;
+    //public TextMeshProUGUI ScoreText;
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
     CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
+    AnimatorStateInfo stateInfo;
     bool doubleJumped;
     float gravityScaleAtStart;
     bool isAlive = true;
-    AnimatorStateInfo stateInfo;
+    float hpBar = 100;
+    float totalPoints = 0;
+    private InputAction action;
+    public InputActionAsset inputActionAsset;
     
 
     // Start is called before the first frame update
@@ -33,12 +42,26 @@ public class characterMovement : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
+        action = inputActionAsset.FindAction("Slide");
+        InvokeRepeating("slideBuffer", 2.0f, 2.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
         stateInfo = myAnimator.GetCurrentAnimatorStateInfo(0);
+        //point system
+        //ScoreText.text = totalPoints.ToString();
+        if (totalPoints > PlayerPrefs.GetFloat("highscore"))
+        {
+            PlayerPrefs.SetFloat("highscore", totalPoints );
+        }
+        //slide action
+        action.canceled += ctx => {
+            myAnimator.SetBool("sliding", false);
+       };
+
+        //up and down jumping animation
         if (!isAlive) { return; }
         float maxHeight = 0;
         
@@ -58,7 +81,7 @@ public class characterMovement : MonoBehaviour
             maxHeight = myRigidbody.velocity.y;
         }
         
-
+        //constant running
         if(runSpeed < maxSpeed)
         {
             runSpeed += 0.0001f;
@@ -74,6 +97,11 @@ public class characterMovement : MonoBehaviour
         {
             myAnimator.SetBool("isGrounded", false);
         }
+        //death
+        if (hpBar <= 0)
+        {
+            Die();
+        }
     }
 
     void OnJump(InputValue value)
@@ -87,6 +115,7 @@ public class characterMovement : MonoBehaviour
         }
         else if(value.isPressed && extraJumps > 0)
         {
+            myAnimator.SetBool("falling", false);
             myAnimator.SetTrigger("doubleJump");
             myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpHeight);   
             extraJumps -= 1;
@@ -99,7 +128,10 @@ public class characterMovement : MonoBehaviour
         {
             extraJumps -= 1;
         }
-        
+        if (other.gameObject.tag == "balloon")
+        {
+            Destroy(other.gameObject);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -107,6 +139,7 @@ public class characterMovement : MonoBehaviour
             {
                 if (stateInfo.IsName("airSlam")) 
                 {
+                    totalPoints += airSlamPoints;
                     myAnimator.SetBool("jumping", true);
                     myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight);  
                     extraJumps += 1;
@@ -114,23 +147,28 @@ public class characterMovement : MonoBehaviour
                 }else
                 {
                     myAnimator.SetTrigger("tookDamage");
-                    Die();
+                    hpBar -= 20f;
                 }
             }
+         if (other.gameObject.tag == "extraPoints")
+         {
+                totalPoints += triggerPoints;
+         }
     }
 
     void OnSlide(InputValue value)
     {
         if(value.isPressed && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
-            myAnimator.SetTrigger("sliding");
-            myRigidbody.velocity = new Vector2 (slide, 0f);  
+            myAnimator.SetBool("sliding", true);
+            myRigidbody.velocity += new Vector2 (slide, 0f);  
 
         }
-        // else if (!myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
-        // {
-        //     myAnimator.SetBool("sliding", false);
-        // }
+    }
+
+    void slideBuffer()
+    {
+        //Debug.Log(action.triggered);
     }
 
     void OnAirSlam(InputValue value)
@@ -140,23 +178,34 @@ public class characterMovement : MonoBehaviour
         {
             myAnimator.SetBool("jumping", false);
             myAnimator.SetTrigger("airSlam");
-            myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
-            StartCoroutine(WaitAndRunFunction());
+            myRigidbody.velocity = new Vector2 (runSpeed, (-1 * airSlam));
+            // myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+            // StartCoroutine(WaitAndRunFunction());
         }
         myAnimator.SetTrigger("airSlam");
-    }
-
-    private IEnumerator WaitAndRunFunction()
-    {
-        
-        yield return new WaitForSeconds(0.2f);
-        myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
-        myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
-        myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
     }
 
     void Die()
     {
         isAlive = false;
+        myAnimator.SetTrigger("death");
+    }
+
+     // private IEnumerator WaitAndRunFunction()
+    // {
+    //     //yield return new WaitForSeconds(0.2f);
+    //     yield return new WaitForSeconds(0f);
+    //     myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+    //     myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+    //     //myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
+         
+    // }
+
+    public void OnButtonReleased(InputAction.CallbackContext ctx)
+    {
+        if (!action.triggered)
+        {
+            // Code to run when the button is released
+        }
     }
 }
