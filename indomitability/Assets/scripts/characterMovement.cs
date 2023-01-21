@@ -18,6 +18,8 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float extraJumps = 1f;
     [SerializeField] float airSlamPoints = 2f;
     [SerializeField] float triggerPoints = 1f;
+    [SerializeField] float jerkForward = 1f;
+    
     //public TextMeshProUGUI ScoreText;
 
     Vector2 moveInput;
@@ -120,7 +122,6 @@ public class characterMovement : MonoBehaviour
             myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpHeight);   
             extraJumps -= 1;
         }
-        
     }
 
     void OnCollisionEnter2D(Collision2D other) {
@@ -146,8 +147,9 @@ public class characterMovement : MonoBehaviour
                     Destroy(other.gameObject);
                 }else
                 {
+                    myRigidbody.velocity = new Vector2 (jerkForward, jerkForward); 
                     myAnimator.SetTrigger("tookDamage");
-                    hpBar -= 20f;
+                    hpBar -= 20f;    
                 }
             }
          if (other.gameObject.tag == "extraPoints")
