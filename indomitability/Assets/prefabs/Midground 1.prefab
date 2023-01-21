@@ -73,7 +73,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6590732072019275943}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f4e55f4fcae4564cb6e606d5a6c8dbf, type: 3}
   m_Name: 
@@ -125,6 +125,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3630178834234092880}
+  - component: {fileID: 2396980916708431980}
   m_Layer: 0
   m_Name: Art
   m_TagString: Untagged
@@ -150,6 +151,17 @@ Transform:
   m_Father: {fileID: 1068533033867330089}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &2396980916708431980
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7713164682423635119}
+  m_Enabled: 1
+  m_SortingLayerID: 1573140899
+  m_SortingLayer: -1
+  m_SortingOrder: 0
 --- !u!1 &9018722669905032850
 GameObject:
   m_ObjectHideFlags: 0
