@@ -24,10 +24,11 @@ public class characterMovement : MonoBehaviour
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
-    CapsuleCollider2D myBodyCollider;
+    BoxCollider2D myBodyCollider;
     Animator myAnimator;
     AnimatorStateInfo stateInfo;
     bool doubleJumped;
+    bool bufferedSlide;
     float gravityScaleAtStart;
     bool isAlive = true;
     float hpBar = 100;
@@ -42,10 +43,9 @@ public class characterMovement : MonoBehaviour
 
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
-        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myBodyCollider = GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
         action = inputActionAsset.FindAction("Slide");
-        InvokeRepeating("slideBuffer", 2.0f, 2.0f);
     }
 
     // Update is called once per frame
@@ -62,6 +62,16 @@ public class characterMovement : MonoBehaviour
         action.canceled += ctx => {
             myAnimator.SetBool("sliding", false);
        };
+       if (action.ReadValue<float>() > 0)
+       {
+           bufferedSlide = true;
+       }else{
+            bufferedSlide = false;
+       }
+       if(bufferedSlide && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
+        {
+            slideFunction();
+        }
 
         //up and down jumping animation
         if (!isAlive) { return; }
@@ -131,6 +141,7 @@ public class characterMovement : MonoBehaviour
         }
         if (other.gameObject.tag == "balloon")
         {
+            totalPoints += triggerPoints;
             Destroy(other.gameObject);
         }
     }
@@ -162,19 +173,19 @@ public class characterMovement : MonoBehaviour
     {
         if(value.isPressed && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
-            myAnimator.SetBool("sliding", true);
-            myRigidbody.velocity += new Vector2 (slide, 0f);  
-
+           slideFunction();
         }
     }
 
-    void slideBuffer()
+    void slideFunction()
     {
-        //Debug.Log(action.triggered);
+       myAnimator.SetBool("sliding", true);
+       myRigidbody.velocity += new Vector2 (slide, 0f); 
     }
 
     void OnAirSlam(InputValue value)
     {
+        if (bufferedSlide) { return; }
         myAnimator.SetTrigger("airSlam");
         if(value.isPressed && !myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
@@ -202,12 +213,4 @@ public class characterMovement : MonoBehaviour
     //     //myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
          
     // }
-
-    public void OnButtonReleased(InputAction.CallbackContext ctx)
-    {
-        if (!action.triggered)
-        {
-            // Code to run when the button is released
-        }
-    }
 }

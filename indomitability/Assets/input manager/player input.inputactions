@@ -357,6 +357,28 @@
                     "action": "AirSlam",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8496326e-5ee8-41ce-b873-6c3c2c7970a0",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AirSlam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5212e2f-69e3-4e1a-8a26-c23ea7099f3a",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AirSlam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
