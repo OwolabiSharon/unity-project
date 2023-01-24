@@ -24,7 +24,8 @@ public class characterMovement : MonoBehaviour
 
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
-    BoxCollider2D myBodyCollider;
+    BoxCollider2D myBodyTrigger;
+    CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
     AnimatorStateInfo stateInfo;
     bool doubleJumped;
@@ -43,7 +44,8 @@ public class characterMovement : MonoBehaviour
 
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
-        myBodyCollider = GetComponent<BoxCollider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myBodyTrigger = GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
         action = inputActionAsset.FindAction("Slide");
     }
@@ -64,6 +66,7 @@ public class characterMovement : MonoBehaviour
        };
        if (action.ReadValue<float>() > 0)
        {
+           myAnimator.SetBool("sliding", true);
            bufferedSlide = true;
        }else{
             bufferedSlide = false;
@@ -89,6 +92,7 @@ public class characterMovement : MonoBehaviour
             maxHeight = myRigidbody.velocity.y;
         } else if (maxHeight == 0 && myRigidbody.velocity.y == maxHeight)
         {
+            myAnimator.SetBool("jumping", false);
             myAnimator.SetTrigger("landing");
             maxHeight = myRigidbody.velocity.y;
         }
@@ -99,9 +103,10 @@ public class characterMovement : MonoBehaviour
             runSpeed += 0.0001f;
         }
         
-        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
+        if (myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
-             myAnimator.SetBool("falling", false);
+            myAnimator.SetBool("jumping", false);
+            myAnimator.SetBool("falling", false);
             myAnimator.SetBool("isGrounded", true);
             Vector2 playerVelocity = new Vector2 (runSpeed, myRigidbody.velocity.y);
             myRigidbody.velocity = playerVelocity;
@@ -201,6 +206,7 @@ public class characterMovement : MonoBehaviour
     void Die()
     {
         isAlive = false;
+        myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         myAnimator.SetTrigger("death");
     }
 
