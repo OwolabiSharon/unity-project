@@ -14,11 +14,11 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float slide = 1f;
     [SerializeField] float airSlam = 3f;
     [SerializeField] float fallSpeed = 1f;
-    [SerializeField] float jumpForce = 5f;
     [SerializeField] float extraJumps = 1f;
     [SerializeField] float airSlamPoints = 2f;
     [SerializeField] float triggerPoints = 1f;
     [SerializeField] float jerkForward = 1f;
+    [SerializeField] float balloonForce = 1f;
     
     //public TextMeshProUGUI ScoreText;
 
@@ -32,8 +32,8 @@ public class characterMovement : MonoBehaviour
     bool bufferedSlide;
     float gravityScaleAtStart;
     bool isAlive = true;
-    float hpBar = 100;
-    float totalPoints = 0;
+    public float hpBar = 100;
+    public float totalPoints = 0;
     private InputAction action;
     public InputActionAsset inputActionAsset;
     
@@ -45,7 +45,7 @@ public class characterMovement : MonoBehaviour
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
-        myBodyTrigger = GetComponent<BoxCollider2D>();
+        myBodyTrigger = GameObject.Find ("playerTriggerCollider").GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
         action = inputActionAsset.FindAction("Slide");
     }
@@ -146,7 +146,16 @@ public class characterMovement : MonoBehaviour
         }
         if (other.gameObject.tag == "balloon")
         {
+            if (extraJumps == 0)
+            {
+                extraJumps += 1;
+            } 
+            myRigidbody.velocity = new Vector2 (balloonForce, balloonForce); 
             totalPoints += triggerPoints;
+            if (stateInfo.IsName("airSlam")) 
+            {
+                totalPoints += airSlamPoints;
+            }
             Destroy(other.gameObject);
         }
     }
@@ -158,8 +167,11 @@ public class characterMovement : MonoBehaviour
                 {
                     totalPoints += airSlamPoints;
                     myAnimator.SetBool("jumping", true);
-                    myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight);  
-                    extraJumps += 1;
+                    myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight); 
+                    if (extraJumps == 0)
+                    {
+                        extraJumps += 1;
+                    } 
                     Destroy(other.gameObject);
                 }else
                 {

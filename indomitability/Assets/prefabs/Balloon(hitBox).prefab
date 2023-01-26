@@ -24,13 +24,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16130041766552689}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.018234862, y: -0.26136637, z: 0}
+  m_LocalScale: {x: 0.88491815, y: 0.88491815, z: 0.88491815}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 16130042862290611}
   m_Father: {fileID: 16130042435550459}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &16130042435550458
 GameObject:
@@ -41,10 +41,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 16130042435550459}
-  - component: {fileID: 16130042435550461}
-  - component: {fileID: 16130042435550460}
+  - component: {fileID: 3491427616245486596}
+  - component: {fileID: 995621277461301075}
   m_Layer: 0
-  m_Name: Balloon
+  m_Name: Balloon(hitBox)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -62,24 +62,29 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3090130369837973796}
   - {fileID: 16130041766552690}
   - {fileID: 16130043141169282}
-  - {fileID: 3090130369837973796}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &16130042435550461
-SortingGroup:
+--- !u!70 &3491427616245486596
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16130042435550458}
   m_Enabled: 1
-  m_SortingLayerID: -690772555
-  m_SortingLayer: -1
-  m_SortingOrder: 0
---- !u!95 &16130042435550460
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 85c369ba053da420aa94e19e18a989be, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.031742096, y: 0.24549818}
+  m_Size: {x: 1.0087993, y: 1.0311131}
+  m_Direction: 0
+--- !u!95 &995621277461301075
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -208,12 +213,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16130043141169281}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.004, y: -0.027, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.020666143, y: -0.27777773, z: 0}
+  m_LocalScale: {x: 0.36945584, y: 0.36945584, z: 0.36945584}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 16130042435550459}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &16130043141169283
 SpriteRenderer:
@@ -276,9 +281,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3090130369837973796}
-  - component: {fileID: 4616284619135912975}
+  - component: {fileID: 1485269697394744331}
   m_Layer: 0
-  m_Name: Hitbox
+  m_Name: sorting layer & animator
   m_TagString: balloon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,21 +302,16 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 16130042435550459}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &4616284619135912975
-CapsuleCollider2D:
+--- !u!210 &1485269697394744331
+SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240684525170987363}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 85c369ba053da420aa94e19e18a989be, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.026163658, y: 0.08372397}
-  m_Size: {x: 0.5290549, y: 0.5640429}
-  m_Direction: 0
+  m_SortingLayerID: -690772555
+  m_SortingLayer: -1
+  m_SortingOrder: 0

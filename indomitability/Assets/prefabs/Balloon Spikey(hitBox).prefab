@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6359926429028933005}
-  - component: {fileID: 3217347685762667631}
-  - component: {fileID: 5132242986010362258}
+  - component: {fileID: 5492906169415828365}
+  - component: {fileID: 3030898508095709585}
   m_Layer: 0
-  m_Name: Balloon Spikey
-  m_TagString: Untagged
+  m_Name: Balloon Spikey(hitBox)
+  m_TagString: causeDamage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,18 +36,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!210 &3217347685762667631
-SortingGroup:
+--- !u!70 &5492906169415828365
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835025770937795659}
   m_Enabled: 1
-  m_SortingLayerID: -690772555
-  m_SortingLayer: -1
-  m_SortingOrder: 1
---- !u!95 &5132242986010362258
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.03, y: 0.55}
+  m_Size: {x: 1.04, y: 0.5640429}
+  m_Direction: 0
+--- !u!95 &3030898508095709585
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -192,10 +197,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3470439800325968602}
-  - component: {fileID: 1371546234683965169}
+  - component: {fileID: 4465200027934428853}
   m_Layer: 0
-  m_Name: Hitbox
-  m_TagString: causeDamage
+  m_Name: sortingLayer and animator
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,22 +220,17 @@ Transform:
   m_Father: {fileID: 6359926429028933005}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &1371546234683965169
-CapsuleCollider2D:
+--- !u!210 &4465200027934428853
+SortingGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5520929679021851098}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.026163658, y: 0.08372397}
-  m_Size: {x: 0.5290549, y: 0.5640429}
-  m_Direction: 0
+  m_SortingLayerID: -690772555
+  m_SortingLayer: -1
+  m_SortingOrder: 1
 --- !u!1 &8238842774222640211
 GameObject:
   m_ObjectHideFlags: 0
