@@ -197,11 +197,11 @@ MonoBehaviour:
   slide: 5
   airSlam: 15
   fallSpeed: 0.1
-  jumpForce: 5
   extraJumps: 0
   airSlamPoints: 2
   triggerPoints: 1
   jerkForward: 10
+  balloonForce: 20
   hpBar: 100
   totalPoints: 0
   inputActionAsset: {fileID: -944628639613478452, guid: 61c1f267b7a964f17828416a339fae68, type: 3}

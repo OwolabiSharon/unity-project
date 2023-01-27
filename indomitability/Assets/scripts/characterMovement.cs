@@ -151,7 +151,6 @@ public class characterMovement : MonoBehaviour
                 extraJumps += 1;
             } 
             myRigidbody.velocity = new Vector2 (balloonForce, balloonForce); 
-            totalPoints += triggerPoints;
             if (stateInfo.IsName("airSlam")) 
             {
                 totalPoints += airSlamPoints;
