@@ -144,14 +144,12 @@ public class characterMovement : MonoBehaviour
         {
             extraJumps -= 1;
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        //balloon
         if (other.gameObject.tag == "balloon")
         {
-            Transform particles = transform.Find("Cartoon Hit");
-                if (particles != null)
-                {
-                    // Do something with the inner object
-                    particles.GetComponent<ParticleSystem>().Play();
-                }
             if (extraJumps == 0)
             {
                 extraJumps += 1;
@@ -163,11 +161,12 @@ public class characterMovement : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "causeDamage")
             {
+                if(other.gameObject.tag == "particles")
+                {
+
+                }
                 if (stateInfo.IsName("airSlam")) 
                 {
                     totalPoints += airSlamPoints;
