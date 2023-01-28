@@ -20,7 +20,6 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float jerkForward = 1f;
     [SerializeField] float balloonForce_x = 1f;
     [SerializeField] float balloonForce_y = 1f;
-    public ParticleSystem particleSystem;
     
     //public TextMeshProUGUI ScoreText;
 
@@ -147,12 +146,17 @@ public class characterMovement : MonoBehaviour
         }
         if (other.gameObject.tag == "balloon")
         {
-            particleSystem.Play();
+            Transform particles = transform.Find("Cartoon Hit");
+                if (particles != null)
+                {
+                    // Do something with the inner object
+                    particles.GetComponent<ParticleSystem>().Play();
+                }
             if (extraJumps == 0)
             {
                 extraJumps += 1;
             } 
-            myRigidbody.velocity = new Vector2 (balloonForce_x, balloonForce_y); 
+            myRigidbody.velocity += new Vector2 (balloonForce_x, balloonForce_y); 
             if (stateInfo.IsName("airSlam")) 
             {
                 totalPoints += airSlamPoints;
@@ -164,7 +168,6 @@ public class characterMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "causeDamage")
             {
-                particleSystem.Play();
                 if (stateInfo.IsName("airSlam")) 
                 {
                     totalPoints += airSlamPoints;
