@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class coinCollection : MonoBehaviour
 {
-    [SerializeField] GameObject coin;
+    public float coins = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +13,10 @@ public class coinCollection : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player")
         {
-            Destroy(coin);
+            gameObject.GetComponentInChildren<ParticleSystem>().Play();
+            Destroy(gameObject);
+            coins += 1f;
+            PlayerPrefs.SetFloat("Coins", PlayerPrefs.GetFloat("Coins") + 1f);
         }
         
     }

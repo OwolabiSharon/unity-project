@@ -37,6 +37,7 @@ public class characterMovement : MonoBehaviour
     public float totalPoints = 0;
     private InputAction action;
     public InputActionAsset inputActionAsset;
+    public ParticleSystem particleSystem;
     
 
     // Start is called before the first frame update
@@ -150,6 +151,7 @@ public class characterMovement : MonoBehaviour
         //balloon
         if (other.gameObject.tag == "balloon")
         {
+            other.GetComponentInChildren<ParticleSystem>().Play();
             if (extraJumps == 0)
             {
                 extraJumps += 1;
@@ -161,12 +163,11 @@ public class characterMovement : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        //damage causing interactables
         if (other.gameObject.tag == "causeDamage")
             {
-                if(other.gameObject.tag == "particles")
-                {
-
-                }
+                other.GetComponentInChildren<ParticleSystem>().Play();
+                //partic.play()
                 if (stateInfo.IsName("airSlam")) 
                 {
                     totalPoints += airSlamPoints;
