@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class prefabDeletion : MonoBehaviour
 {
-    public GameObject player;
     public float threshold = 100f;
+    GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        
+       player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame

@@ -8,6 +8,8 @@ TagManager:
   - causeDamage
   - balloon
   - particles
+  - tree
+  - coinText
   layers:
   - Default
   - TransparentFX

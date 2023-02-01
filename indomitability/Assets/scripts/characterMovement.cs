@@ -37,7 +37,9 @@ public class characterMovement : MonoBehaviour
     public float totalPoints = 0;
     private InputAction action;
     public InputActionAsset inputActionAsset;
-    public ParticleSystem particleSystem;
+    //public ParticleSystem particleSystem;
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI pointText;
     
 
     // Start is called before the first frame update
@@ -104,6 +106,7 @@ public class characterMovement : MonoBehaviour
             runSpeed += 0.0001f;
         }
         
+        //if is grounded
         if (myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
             myAnimator.SetBool("jumping", false);
@@ -146,31 +149,43 @@ public class characterMovement : MonoBehaviour
             extraJumps -= 1;
         }
     }
+    
+    void gainPoints(float points)
+    {
+        totalPoints += points;
+        pointText.text = $"Points: {totalPoints}";
+    }
 
     void OnTriggerEnter2D(Collider2D other) {
         //balloon
         if (other.gameObject.tag == "balloon")
         {
-            other.GetComponentInChildren<ParticleSystem>().Play();
             if (extraJumps == 0)
             {
                 extraJumps += 1;
             } 
-            myRigidbody.velocity += new Vector2 (balloonForce_x, balloonForce_y); 
+            myRigidbody.velocity = new Vector2 (balloonForce_x, balloonForce_y); 
             if (stateInfo.IsName("airSlam")) 
             {
-                totalPoints += airSlamPoints;
+                gainPoints(airSlamPoints);
             }
             Destroy(other.gameObject);
         }
+
+        //play particles
+        if(other.gameObject.tag == "particles")
+        {
+            other.GetComponent<ParticleSystem>().Play();
+        }
+
         //damage causing interactables
-        if (other.gameObject.tag == "causeDamage")
+        if (other.gameObject.tag == "causeDamage" || other.gameObject.tag == "tree" )
             {
-                other.GetComponentInChildren<ParticleSystem>().Play();
+                //other.GetComponentInChildren<ParticleSystem>().Play();
                 //partic.play()
-                if (stateInfo.IsName("airSlam")) 
+                if (stateInfo.IsName("airSlam") && other.gameObject.tag == "causeDamage") 
                 {
-                    totalPoints += airSlamPoints;
+                    gainPoints(airSlamPoints);
                     myAnimator.SetBool("jumping", true);
                     myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight); 
                     if (extraJumps == 0)
@@ -183,11 +198,12 @@ public class characterMovement : MonoBehaviour
                     myRigidbody.velocity = new Vector2 (jerkForward, jerkForward); 
                     myAnimator.SetTrigger("tookDamage");
                     hpBar -= 20f;    
+                    hpText.text = $"HP: {hpBar}";
                 }
             }
          if (other.gameObject.tag == "extraPoints")
          {
-                totalPoints += triggerPoints;
+            gainPoints(triggerPoints);
          }
     }
 

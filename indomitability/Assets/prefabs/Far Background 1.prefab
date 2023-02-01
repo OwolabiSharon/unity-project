@@ -294,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8591992153686511807}
   - component: {fileID: 8793681788529284462}
+  - component: {fileID: 6649077485892798795}
   m_Layer: 3
   m_Name: Far Background 1
   m_TagString: Untagged
@@ -337,6 +338,19 @@ MonoBehaviour:
   oldPreview: 0
   originalPosition: {x: 0, y: 0, z: 0}
   lastPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &6649077485892798795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590732072019275943}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 402304d7bd007401f8272e979fde55d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshold: 100
 --- !u!1 &7161610864127416576
 GameObject:
   m_ObjectHideFlags: 0
@@ -412,5 +426,5 @@ SortingGroup:
   m_GameObject: {fileID: 7713164682423635119}
   m_Enabled: 1
   m_SortingLayerID: 1715505357
-  m_SortingLayer: -5
+  m_SortingLayer: -6
   m_SortingOrder: 0
