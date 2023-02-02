@@ -121,7 +121,7 @@ public class characterMovement : MonoBehaviour
         //death
         if (hpBar <= 0)
         {
-            Die();
+           // Die();
         }
     }
 
@@ -218,7 +218,7 @@ public class characterMovement : MonoBehaviour
     void slideFunction()
     {
        myAnimator.SetBool("sliding", true);
-       myRigidbody.velocity += new Vector2 (slide, 0f); 
+       //myRigidbody.velocity += new Vector2 (slide, 0f); 
     }
 
     void OnAirSlam(InputValue value)

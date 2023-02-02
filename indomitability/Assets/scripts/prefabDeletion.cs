@@ -7,7 +7,7 @@ public class prefabDeletion : MonoBehaviour
     public float threshold = 100f;
     GameObject player;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
        player = GameObject.FindWithTag("Player");
     }
@@ -15,11 +15,11 @@ public class prefabDeletion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector2.Distance(transform.position, player.transform.position);
-        if (distance > threshold)
-        {
-            Destroy(gameObject);
-        }
+        if (transform.position.x < player.transform.position.x - threshold)
+    {
+        Debug.Log("Done");
+        Destroy(gameObject);
+    }
         
     }
 }

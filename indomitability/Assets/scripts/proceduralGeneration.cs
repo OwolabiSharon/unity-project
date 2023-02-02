@@ -12,13 +12,9 @@ public class proceduralGeneration : MonoBehaviour
     Vector2 lastEndPosition;
     // Start is called before the first frame update
 
-    private void Awake() {
-        lastEndPosition = ground_0.Find("EndPosition").position;
-
-    }
     void Start()
     {
-        
+        lastEndPosition = ground_0.Find("EndPosition").position;
     }
 
     // Update is called once per frame
@@ -27,15 +23,13 @@ public class proceduralGeneration : MonoBehaviour
         if (Vector3.Distance(player.position,lastEndPosition) <playerDistanceFromEnd)
         {
             SpawnLevelPart();
+            Debug.Log("trying");
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        SpawnLevelPart();
-    }
 
     void SpawnLevelPart(){
-        Transform lastLevelPartTransform = SpawnLevelPart(lastEndPosition);
+        Transform lastLevelPartTransform = SpawnLevelPart(lastEndPosition); 
         lastEndPosition = lastLevelPartTransform.Find("EndPosition").position;
     }
 
