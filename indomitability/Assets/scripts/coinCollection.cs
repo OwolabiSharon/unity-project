@@ -16,6 +16,10 @@ public class coinCollection : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player")
         {
+            characterMovement script = other.gameObject.GetComponent<characterMovement>();
+            Transform particle = gameObject.transform.Find("particles");
+            Vector3 particleSpawn = particle.position;
+            Instantiate(script.collectCoin,particleSpawn,Quaternion.identity);
             Destroy(gameObject);
             coins += 1f;
             coinText.text = $"Coins: {coins}";

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1745073911924222422}
   - component: {fileID: 1745073911924222423}
   - component: {fileID: 1745073911924222420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: box
   m_TagString: causeDamage
   m_Icon: {fileID: 0}

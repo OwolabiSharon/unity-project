@@ -17,7 +17,6 @@ public class prefabDeletion : MonoBehaviour
     {
         if (transform.position.x < player.transform.position.x - threshold)
     {
-        Debug.Log("Done");
         Destroy(gameObject);
     }
         

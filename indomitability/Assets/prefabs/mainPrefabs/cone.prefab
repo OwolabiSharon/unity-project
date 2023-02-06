@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3698072719768527036}
   - component: {fileID: 6432936239850121092}
   - component: {fileID: 8504281038290248551}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cone
   m_TagString: causeDamage
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0067625046, y: 0.00450778}

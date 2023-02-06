@@ -20,6 +20,9 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float jerkForward = 1f;
     [SerializeField] float balloonForce_x = 1f;
     [SerializeField] float balloonForce_y = 1f;
+    [SerializeField] Transform playerHurt;
+    public Transform collectCoin;
+    [SerializeField] Transform balloon;
     
     //public TextMeshProUGUI ScoreText;
 
@@ -29,15 +32,17 @@ public class characterMovement : MonoBehaviour
     CapsuleCollider2D myBodyCollider;
     Animator myAnimator;
     AnimatorStateInfo stateInfo;
+    SpriteRenderer spriteRenderer;
+    Color originalColor;
     bool doubleJumped;
     bool bufferedSlide;
     float gravityScaleAtStart;
     bool isAlive = true;
+    bool isInvinsible = false;
     public float hpBar = 100;
     public float totalPoints = 0;
     private InputAction action;
     public InputActionAsset inputActionAsset;
-    //public ParticleSystem particleSystem;
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI pointText;
     
@@ -45,6 +50,8 @@ public class characterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         myBodyCollider = GetComponent<CapsuleCollider2D>();
@@ -131,7 +138,7 @@ public class characterMovement : MonoBehaviour
         if(value.isPressed && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
             myAnimator.SetBool("jumping", true);
-            myRigidbody.velocity = new Vector2 (0f, jumpHeight);  
+            myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpHeight);  
             extraJumps += 1;
         }
         else if(value.isPressed && extraJumps > 0)
@@ -160,6 +167,9 @@ public class characterMovement : MonoBehaviour
         //balloon
         if (other.gameObject.tag == "balloon")
         {
+            Transform particle = other.transform.Find("particles");
+            Vector3 particleSpawn = particle.position;
+            Instantiate(balloon,particleSpawn,Quaternion.identity);
             if (extraJumps == 0)
             {
                 extraJumps += 1;
@@ -172,15 +182,12 @@ public class characterMovement : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        //play particles
-        if(other.gameObject.tag == "particles")
-        {
-            other.GetComponent<ParticleSystem>().Play();
-        }
-
         //damage causing interactables
         if (other.gameObject.tag == "causeDamage" || other.gameObject.tag == "tree" )
             {
+                Transform particle = other.transform.Find("particles");
+                Vector3 particleSpawn = particle.position;
+                
                 //other.GetComponentInChildren<ParticleSystem>().Play();
                 //partic.play()
                 if (stateInfo.IsName("airSlam") && other.gameObject.tag == "causeDamage") 
@@ -192,13 +199,17 @@ public class characterMovement : MonoBehaviour
                     {
                         extraJumps += 1;
                     } 
+                    Instantiate(playerHurt,particleSpawn,Quaternion.identity);
                     Destroy(other.gameObject);
                 }else
                 {
-                    myRigidbody.velocity = new Vector2 (jerkForward, jerkForward); 
+                    if (isInvinsible) { return; }
+                    myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jerkForward); 
                     myAnimator.SetTrigger("tookDamage");
                     hpBar -= 20f;    
                     hpText.text = $"HP: {hpBar}";
+                    Instantiate(playerHurt,particleSpawn,Quaternion.identity);
+                    StartCoroutine(Invinsibility());
                 }
             }
          if (other.gameObject.tag == "extraPoints")
@@ -243,13 +254,15 @@ public class characterMovement : MonoBehaviour
         myAnimator.SetTrigger("death");
     }
 
-     // private IEnumerator WaitAndRunFunction()
-    // {
-    //     //yield return new WaitForSeconds(0.2f);
-    //     yield return new WaitForSeconds(0f);
-    //     myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
-    //     myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
-    //     //myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
+    private IEnumerator Invinsibility()
+    {
+        Color newColor = new Color(originalColor.r, originalColor.g, originalColor.b, originalColor.a * 0.5f);
+        spriteRenderer.color = newColor;
+        isInvinsible = true;
+        yield return new WaitForSeconds(0.5f);
+        spriteRenderer.color = originalColor;
+        isInvinsible = false;
+        //myRigidbody.velocity = new Vector2 (0f, (-1 * airSlam)); 
          
-    // }
+    }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6359926429028933005}
   - component: {fileID: 5492906169415828365}
   - component: {fileID: 3030898508095709585}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Balloon Spikey(hitBox)
   m_TagString: causeDamage
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2369407882822021978}
   - component: {fileID: 2123285113560815955}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Balloon String 001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8288342750996699254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Balloon Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3470439800325968602}
   - component: {fileID: 4465200027934428853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sortingLayer and animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6255180662797499180}
   - component: {fileID: 2343174060068495147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Balloon 001
   m_TagString: Untagged
   m_Icon: {fileID: 0}

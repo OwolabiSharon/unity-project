@@ -23,7 +23,6 @@ public class proceduralGeneration : MonoBehaviour
         if (Vector3.Distance(player.position,lastEndPosition) <playerDistanceFromEnd)
         {
             SpawnLevelPart();
-            Debug.Log("trying");
         }
     }
 

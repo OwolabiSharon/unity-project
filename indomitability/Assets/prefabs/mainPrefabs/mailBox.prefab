@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1447828405310636786}
   - component: {fileID: 572862329762883481}
   - component: {fileID: 6900724838357614837}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: mailBox
   m_TagString: causeDamage
   m_Icon: {fileID: 0}
