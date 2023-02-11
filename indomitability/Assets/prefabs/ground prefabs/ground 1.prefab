@@ -2385,6 +2385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1686780406281288834}
+  - component: {fileID: 352273457809402020}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -2411,6 +2412,17 @@ Transform:
   m_Father: {fileID: 5181062901458381314}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &352273457809402020
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159305471549579402}
+  m_Enabled: 1
+  m_SortingLayerID: -962301021
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &6227226795853520381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,6 +2537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1067291417139353273}
+  - component: {fileID: 7947666876092167744}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -2551,6 +2564,17 @@ Transform:
   m_Father: {fileID: 1345355211238721014}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &7947666876092167744
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7192417009527746161}
+  m_Enabled: 1
+  m_SortingLayerID: -962301021
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &7261104986388866695
 GameObject:
   m_ObjectHideFlags: 0
