@@ -8,6 +8,7 @@ using TMPro;
 
 public class characterMovement : MonoBehaviour
 {
+    public static characterMovement instance;
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float maxSpeed = 10f;
     [SerializeField] float jumpHeight = 100f;
@@ -41,15 +42,31 @@ public class characterMovement : MonoBehaviour
     bool isInvinsible = false;
     public float hpBar = 100;
     public float totalPoints = 0;
+    public float coins = 0;
     private InputAction action;
     public InputActionAsset inputActionAsset;
     public TextMeshProUGUI hpText;
     public TextMeshProUGUI pointText;
+    public bool isPlaying = false;
+    // public GameObject mainMenu;
+    // public GameObject gamePlay;
     
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
+       // MenuReference = FindObjectOfType<Menu>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         myAnimator = GetComponent<Animator>();
@@ -70,10 +87,11 @@ public class characterMovement : MonoBehaviour
         {
             PlayerPrefs.SetFloat("highscore", totalPoints );
         }
-        //slide action
         action.canceled += ctx => {
-            myAnimator.SetBool("sliding", false);
-       };
+    if (myAnimator != null) {
+        myAnimator.SetBool("sliding", false);
+    }
+};
        if (action.ReadValue<float>() > 0)
        {
            myAnimator.SetBool("sliding", true);
@@ -114,24 +132,40 @@ public class characterMovement : MonoBehaviour
         }
         
         //if is grounded
-        if (myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")))
+        if (myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")) && isPlaying)
         {
-            myAnimator.SetBool("jumping", false);
-            myAnimator.SetBool("falling", false);
-            myAnimator.SetBool("isGrounded", true);
+            whileGrounded();
             Vector2 playerVelocity = new Vector2 (runSpeed, myRigidbody.velocity.y);
             myRigidbody.velocity = playerVelocity;
-        }else
+        }else if(myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")) && !isPlaying)
+        {
+            whileGrounded();
+        }
+        else
         {
             myAnimator.SetBool("isGrounded", false);
         }
         //death
         if (hpBar <= 0)
         {
-           // Die();
+            Die();
+            // gamePlay.SetActive(false);
+            // mainMenu.SetActive(true);
+            StartCoroutine(LoadNextLevel());
         }
     }
+    IEnumerator LoadNextLevel()
+    {   
+        yield return new WaitForSecondsRealtime(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
+    void whileGrounded()
+    {
+        myAnimator.SetBool("jumping", false);
+        myAnimator.SetBool("falling", false);
+        myAnimator.SetBool("isGrounded", true);
+    }
     void OnJump(InputValue value)
     {
         if (!isAlive) { return; }
@@ -250,7 +284,7 @@ public class characterMovement : MonoBehaviour
     void Die()
     {
         isAlive = false;
-        myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         myAnimator.SetTrigger("death");
     }
 

@@ -138,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 541984423, guid: 6077b708868df8d4eb3868f1eb6e6164, type: 3}
+  m_Sprite: {fileID: 1228605615, guid: 0ef520b56eddab94e8a40a74b0023bed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -202,12 +202,16 @@ MonoBehaviour:
   triggerPoints: 1
   jerkForward: 10
   balloonForce_x: 10
-  balloonForce_y: 20
+  balloonForce_y: 25
+  playerHurt: {fileID: 2783980465707459882, guid: 46f55cb942f845346a06e4d0562283c2, type: 3}
+  collectCoin: {fileID: 3352790412248714500, guid: 4503b3a4d26e0ea41b60881951b58418, type: 3}
+  balloon: {fileID: 2611842193748016208, guid: 8020ef3ff2aa3f347b5ce7156f251ffd, type: 3}
   hpBar: 100
   totalPoints: 0
   inputActionAsset: {fileID: -944628639613478452, guid: 61c1f267b7a964f17828416a339fae68, type: 3}
   hpText: {fileID: 0}
   pointText: {fileID: 0}
+  isPlaying: 0
 --- !u!50 &3995956585440772752
 Rigidbody2D:
   serializedVersion: 4
@@ -243,9 +247,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ground_0: {fileID: 0}
   grounds:
+  - {fileID: 7627330920984829364, guid: acc071b8f7cdf9246a54775c341ec8df, type: 3}
   - {fileID: 7627330920984829364, guid: 064235c95bff44e9fbe8b553c85a5b62, type: 3}
-  - {fileID: 7627330920984829364, guid: 064235c95bff44e9fbe8b553c85a5b62, type: 3}
-  - {fileID: 7627330920984829364, guid: 064235c95bff44e9fbe8b553c85a5b62, type: 3}
+  - {fileID: 2625295974525823231, guid: 46a4fdf3192f24601a1fe98e06aecc1c, type: 3}
+  - {fileID: 5704871782508403526, guid: 10c568c3af4c04ea78cff0ab16047c4a, type: 3}
   player: {fileID: 3995956585440772765}
 --- !u!95 &3995956585440772755
 Animator:
