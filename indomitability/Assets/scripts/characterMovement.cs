@@ -75,6 +75,12 @@ public class characterMovement : MonoBehaviour
         myBodyTrigger = GameObject.Find ("playerTriggerCollider").GetComponent<BoxCollider2D>();
         gravityScaleAtStart = myRigidbody.gravityScale;
         action = inputActionAsset.FindAction("Slide");
+        if(!isPlaying)
+        {
+             myAnimator.SetBool("isPlaying", false);
+             myAnimator.SetBool("isIdle", true);
+        }
+       
     }
 
     // Update is called once per frame
@@ -135,6 +141,8 @@ public class characterMovement : MonoBehaviour
         if (myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")) && isPlaying)
         {
             whileGrounded();
+            myAnimator.SetBool("isPlaying", true);
+            myAnimator.SetBool("isIdle", false);
             Vector2 playerVelocity = new Vector2 (runSpeed, myRigidbody.velocity.y);
             myRigidbody.velocity = playerVelocity;
         }else if(myBodyTrigger.IsTouchingLayers(LayerMask.GetMask("ground")) && !isPlaying)
