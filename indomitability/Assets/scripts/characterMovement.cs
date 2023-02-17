@@ -24,6 +24,7 @@ public class characterMovement : MonoBehaviour
     [SerializeField] Transform playerHurt;
     public Transform collectCoin;
     [SerializeField] Transform balloon;
+    public audioManager audioManager;
     
     //public TextMeshProUGUI ScoreText;
 
@@ -42,7 +43,6 @@ public class characterMovement : MonoBehaviour
     bool isInvinsible = false;
     public float hpBar = 100;
     public float totalPoints = 0;
-    public float coins = 0;
     private InputAction action;
     public InputActionAsset inputActionAsset;
     public TextMeshProUGUI hpText;
@@ -67,6 +67,7 @@ public class characterMovement : MonoBehaviour
     void Start()
     {
        // MenuReference = FindObjectOfType<Menu>();
+       audioManager = GetComponent<audioManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         myAnimator = GetComponent<Animator>();
@@ -97,7 +98,7 @@ public class characterMovement : MonoBehaviour
     if (myAnimator != null) {
         myAnimator.SetBool("sliding", false);
     }
-};
+     };
        if (action.ReadValue<float>() > 0)
        {
            myAnimator.SetBool("sliding", true);
@@ -132,7 +133,7 @@ public class characterMovement : MonoBehaviour
         }
         
         //constant running
-        if(runSpeed < maxSpeed)
+        if(runSpeed < maxSpeed && isPlaying)
         {
             runSpeed += 0.0001f;
         }
@@ -156,10 +157,9 @@ public class characterMovement : MonoBehaviour
         //death
         if (hpBar <= 0)
         {
-            Die();
+           // Die();
             // gamePlay.SetActive(false);
             // mainMenu.SetActive(true);
-            StartCoroutine(LoadNextLevel());
         }
     }
     IEnumerator LoadNextLevel()
@@ -176,7 +176,7 @@ public class characterMovement : MonoBehaviour
     }
     void OnJump(InputValue value)
     {
-        if (!isAlive) { return; }
+        if (!isAlive || !isPlaying) { return; }
         if(value.isPressed && myBodyCollider.IsTouchingLayers(LayerMask.GetMask("ground")))
         {
             myAnimator.SetBool("jumping", true);
@@ -199,7 +199,7 @@ public class characterMovement : MonoBehaviour
         }
     }
     
-    void gainPoints(float points)
+    public void gainPoints(float points)
     {
         totalPoints += points;
         pointText.text = $"Points: {totalPoints}";
@@ -211,6 +211,7 @@ public class characterMovement : MonoBehaviour
         {
             Transform particle = other.transform.Find("particles");
             Vector3 particleSpawn = particle.position;
+            audioManager.SendMessage("OnBalloonBounceFunc");
             Instantiate(balloon,particleSpawn,Quaternion.identity);
             if (extraJumps == 0)
             {
@@ -243,6 +244,7 @@ public class characterMovement : MonoBehaviour
                     } 
                     Instantiate(playerHurt,particleSpawn,Quaternion.identity);
                     Destroy(other.gameObject);
+                    audioManager.SendMessage("onAirSlamFunc");
                 }else
                 {
                     if (isInvinsible) { return; }
@@ -252,6 +254,7 @@ public class characterMovement : MonoBehaviour
                     hpText.text = $"HP: {hpBar}";
                     Instantiate(playerHurt,particleSpawn,Quaternion.identity);
                     StartCoroutine(Invinsibility());
+                    audioManager.SendMessage("onDamageFunc");
                 }
             }
          if (other.gameObject.tag == "extraPoints")
@@ -291,9 +294,11 @@ public class characterMovement : MonoBehaviour
 
     void Die()
     {
+        audioManager.SendMessage("onDeathFunc");
         isAlive = false;
         myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         myAnimator.SetTrigger("death");
+        StartCoroutine(LoadNextLevel());
     }
 
     private IEnumerator Invinsibility()

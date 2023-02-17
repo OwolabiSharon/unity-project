@@ -6,28 +6,21 @@ using TMPro;
 
 public class coinCollection : MonoBehaviour
 {
-    public float coins = 0f;
-    TextMeshProUGUI coinText;
     // Start is called before the first frame update
     void Update()
     {
-        GameObject coinTextObject = GameObject.FindWithTag("coinText");
-        if (coinTextObject) {
-            coinText = coinTextObject.GetComponent<TextMeshProUGUI>();
-        }
     }
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player")
         {
             characterMovement script = other.gameObject.GetComponent<characterMovement>();
+            audioManager audioManager = other.gameObject.GetComponent<audioManager>();
             Transform particle = gameObject.transform.Find("particles");
             Vector3 particleSpawn = particle.position;
             Instantiate(script.collectCoin,particleSpawn,Quaternion.identity);
             Destroy(gameObject);
-            script.coins += 1f;
-            coins = script.coins;
-            coinText.text = $"Coins: {coins}";
-            PlayerPrefs.SetFloat("Coins", PlayerPrefs.GetFloat("Coins") + 1f);
+            script.SendMessage("gainPoints", 5f);
+            audioManager.SendMessage("onCoinCollectionFunc");
         }
         
     }

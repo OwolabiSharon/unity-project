@@ -7,7 +7,6 @@ using TMPro;
 public class Menu : MonoBehaviour
 {
     public TextMeshProUGUI HighScoreText;
-    public TextMeshProUGUI CoinsText;
     public GameObject mainMenu;
     public GameObject gamePlay;
 
@@ -19,10 +18,7 @@ public class Menu : MonoBehaviour
     
 
     private void Start() {
-        //StartCoroutine(LoadYourSecondAsyncScene());
-        HighScoreText.text = "HighScore: " + PlayerPrefs.GetFloat("highscore");
-        CoinsText.text = "Coins: " + PlayerPrefs.GetFloat("Coins");
-        
+        HighScoreText.text = "HighScore: " + PlayerPrefs.GetFloat("highscore");   
     }
     
     public void PlayGame()
