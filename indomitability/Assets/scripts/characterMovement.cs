@@ -252,7 +252,7 @@ public class characterMovement : MonoBehaviour
                     myAnimator.SetTrigger("tookDamage");
                     hpBar -= 20f;    
                     hpText.text = $"HP: {hpBar}";
-                    Instantiate(playerHurt,particleSpawn,Quaternion.identity);
+                    Instantiate(playerHurt,transform.position,Quaternion.identity);
                     StartCoroutine(Invinsibility());
                     audioManager.SendMessage("onDamageFunc");
                 }
