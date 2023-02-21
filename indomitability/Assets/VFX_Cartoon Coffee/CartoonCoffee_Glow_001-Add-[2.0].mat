@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CartoonCoffee_Glow_001-Add-[2
+  m_Name: CartoonCoffee_Glow_001-Add-[2.0]
   m_Shader: {fileID: 4800000, guid: 1e9a07b1809f48344ac6fb78f7e2f733, type: 3}
   m_ValidKeywords:
   - _ENABLEADJUSTCOLOR_ON

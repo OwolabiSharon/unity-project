@@ -550,6 +550,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 545232470}
     - target: {fileID: 3995956585440772767, guid: 439144c5224c7463f9b8510d5028067b, type: 3}
+      propertyPath: balloonForce_x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3995956585440772767, guid: 439144c5224c7463f9b8510d5028067b, type: 3}
       propertyPath: balloonForce_y
       value: 25
       objectReference: {fileID: 0}
@@ -2908,11 +2912,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b755f4b77ea459d8c49c667adb247f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onBalloonBounce: {fileID: 2352533311064081205, guid: b63b8b861701741b0bb452b06d941b2d, type: 3}
-  onAirSlam: {fileID: 2352533311064081205, guid: b63b8b861701741b0bb452b06d941b2d, type: 3}
-  onDamage: {fileID: 2352533311064081205, guid: b63b8b861701741b0bb452b06d941b2d, type: 3}
-  onCoinCollection: {fileID: 2352533311064081205, guid: b63b8b861701741b0bb452b06d941b2d, type: 3}
-  onDeath: {fileID: 2352533311064081205, guid: b63b8b861701741b0bb452b06d941b2d, type: 3}
+  onBalloonBounce: {fileID: 2352533311064081205, guid: 197551b43274926498740ce3d9a7daad, type: 3}
+  onAirSlam: {fileID: 2352533311064081205, guid: b0451abe7bc6cba49baee849bade480c, type: 3}
+  onDamage: {fileID: 2352533311064081205, guid: 26855a7a55f3d244eb1cb95ee6ed2e56, type: 3}
+  onCoinCollection: {fileID: 2352533311064081205, guid: 56fb5a2872d8db846a6ff78dfb21d6eb, type: 3}
+  onDeath: {fileID: 2352533311064081205, guid: 8fee82e654c47c349be44d794a0bf69a, type: 3}
 --- !u!1 &1916204137
 GameObject:
   m_ObjectHideFlags: 0
