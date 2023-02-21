@@ -242,7 +242,7 @@ public class characterMovement : MonoBehaviour
                     {
                         extraJumps += 1;
                     } 
-                    Instantiate(playerHurt,particleSpawn,Quaternion.identity);
+                    Instantiate(balloon,particleSpawn,Quaternion.identity);
                     Destroy(other.gameObject);
                     audioManager.SendMessage("onAirSlamFunc");
                 }else
