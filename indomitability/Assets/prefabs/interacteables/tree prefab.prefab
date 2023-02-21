@@ -126,6 +126,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6301320619715890763, guid: 939b1e53a73f84cbcaacea16c2b6e4f1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6939016706981652522, guid: 939b1e53a73f84cbcaacea16c2b6e4f1, type: 3}
       propertyPath: m_Layer
       value: 0
