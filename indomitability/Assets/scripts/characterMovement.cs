@@ -217,7 +217,7 @@ public class characterMovement : MonoBehaviour
             {
                 extraJumps += 1;
             } 
-            myRigidbody.velocity = new Vector2 (balloonForce_x, balloonForce_y); 
+            myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight); 
             if (stateInfo.IsName("airSlam")) 
             {
                 gainPoints(airSlamPoints);
