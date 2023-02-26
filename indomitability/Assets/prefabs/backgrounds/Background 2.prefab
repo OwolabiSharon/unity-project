@@ -1339,13 +1339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4e55f4fcae4564cb6e606d5a6c8dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  distance: 700
-  horizontal: 1
-  vertical: 0
-  oldPreview: 0
-  originalPosition: {x: 0, y: 0, z: 0}
-  lastPosition: {x: 0, y: 0, z: 0}
+  parallaxEffectMultiplier: {x: 0.3, y: 0, z: 0}
 --- !u!114 &8795391751560267160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,7 +1352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402304d7bd007401f8272e979fde55d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 100
+  threshold: 50
 --- !u!1 &6642537719258091698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,7 +1545,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7161610864127416576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 70, y: 0, z: 0}
+  m_LocalPosition: {x: 22.07, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

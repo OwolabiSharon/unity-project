@@ -16,8 +16,8 @@ public class characterMovement : MonoBehaviour
     [SerializeField] float airSlam = 3f;
     [SerializeField] float fallSpeed = 1f;
     [SerializeField] float extraJumps = 1f;
-    [SerializeField] float airSlamPoints = 2f;
-    [SerializeField] float triggerPoints = 1f;
+    [SerializeField] float airSlamPoints = 200f;
+    [SerializeField] float triggerPoints = 100f;
     [SerializeField] float jerkForward = 1f;
     [SerializeField] float balloonForce_x = 1f;
     [SerializeField] float balloonForce_y = 1f;
@@ -202,7 +202,7 @@ public class characterMovement : MonoBehaviour
     public void gainPoints(float points)
     {
         totalPoints += points;
-        pointText.text = $"Points: {totalPoints}";
+        pointText.text = $"{totalPoints}";
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -251,15 +251,17 @@ public class characterMovement : MonoBehaviour
                     myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jerkForward); 
                     myAnimator.SetTrigger("tookDamage");
                     hpBar -= 20f;    
-                    hpText.text = $"HP: {hpBar}";
+                    hpText.text = $"{hpBar}/";
                     Instantiate(playerHurt,transform.position,Quaternion.identity);
                     StartCoroutine(Invinsibility());
                     audioManager.SendMessage("onDamageFunc");
                 }
             }
-         if (other.gameObject.tag == "extraPoints")
+         if (other.gameObject.tag == "extraPoints" && stateInfo.IsName("slide"))
          {
             gainPoints(triggerPoints);
+            audioManager.SendMessage("onAirSlamFunc");
+            Instantiate(balloon,transform.position,Quaternion.identity);
          }
     }
 

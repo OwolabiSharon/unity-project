@@ -11,6 +11,7 @@ TagManager:
   - tree
   - coinText
   - Coin
+  - extraPoints
   layers:
   - Default
   - TransparentFX
