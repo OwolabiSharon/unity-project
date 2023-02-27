@@ -76,3 +76,6 @@ TagManager:
   - name: Ground
     uniqueID: 3332666275
     locked: 0
+  - name: canvas
+    uniqueID: 2432561563
+    locked: 0

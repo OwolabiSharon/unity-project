@@ -19,7 +19,7 @@ public class coinCollection : MonoBehaviour
             Vector3 particleSpawn = particle.position;
             Instantiate(script.collectCoin,particleSpawn,Quaternion.identity);
             Destroy(gameObject);
-            script.SendMessage("gainPoints", 500f);
+            script.SendMessage("gainCoinPoints", 500f);
             audioManager.SendMessage("onCoinCollectionFunc");
         }
         

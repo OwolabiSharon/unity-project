@@ -24,10 +24,11 @@ public class characterMovement : MonoBehaviour
     [SerializeField] Transform playerHurt;
     public Transform collectCoin;
     [SerializeField] Transform balloon;
+    [SerializeField] Transform extraTriggerPoints;
     public audioManager audioManager;
+    public TextMeshProUGUI plusPoints;
     
-    //public TextMeshProUGUI ScoreText;
-
+    
     Vector2 moveInput;
     Rigidbody2D myRigidbody;
     BoxCollider2D myBodyTrigger;
@@ -157,9 +158,8 @@ public class characterMovement : MonoBehaviour
         //death
         if (hpBar <= 0)
         {
-           // Die();
-            // gamePlay.SetActive(false);
-            // mainMenu.SetActive(true);
+           Die();
+         
         }
     }
     IEnumerator LoadNextLevel()
@@ -199,12 +199,29 @@ public class characterMovement : MonoBehaviour
         }
     }
     
-    public void gainPoints(float points)
+    private void gainPoints(float points, Vector3 objectPos)
     {
+        plusPoints.gameObject.SetActive(true);
+        plusPoints.transform.position = objectPos;
         totalPoints += points;
         pointText.text = $"{totalPoints}";
+        
+        Invoke("offtext", 0.3f);
+    }
+    public void gainCoinPoints(float points)
+    {
+        plusPoints.gameObject.SetActive(true);
+        plusPoints.transform.position = transform.position;
+        totalPoints += points;
+        pointText.text = $"{totalPoints}";
+        
+        Invoke("offtext", 0.3f);
     }
 
+    void offtext()
+    {
+        plusPoints.gameObject.SetActive(false);
+    }
     void OnTriggerEnter2D(Collider2D other) {
         //balloon
         if (other.gameObject.tag == "balloon")
@@ -220,7 +237,7 @@ public class characterMovement : MonoBehaviour
             myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight); 
             if (stateInfo.IsName("airSlam")) 
             {
-                gainPoints(airSlamPoints);
+                gainPoints(airSlamPoints,other.transform.position);
             }
             Destroy(other.gameObject);
         }
@@ -235,7 +252,7 @@ public class characterMovement : MonoBehaviour
                 //partic.play()
                 if (stateInfo.IsName("airSlam") && other.gameObject.tag == "causeDamage") 
                 {
-                    gainPoints(airSlamPoints);
+                    gainPoints(airSlamPoints, other.transform.position);
                     myAnimator.SetBool("jumping", true);
                     myRigidbody.velocity = new Vector2 (runSpeed, jumpHeight); 
                     if (extraJumps == 0)
@@ -259,9 +276,10 @@ public class characterMovement : MonoBehaviour
             }
          if (other.gameObject.tag == "extraPoints" && stateInfo.IsName("slide"))
          {
-            gainPoints(triggerPoints);
+            
+            gainPoints(triggerPoints, other.transform.position);
             audioManager.SendMessage("onAirSlamFunc");
-            Instantiate(balloon,transform.position,Quaternion.identity);
+            Instantiate(extraTriggerPoints,transform.position,Quaternion.identity);
          }
     }
 
